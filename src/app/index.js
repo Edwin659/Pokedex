@@ -4,7 +4,7 @@ import PokemonCard from "../components/PokemonCard"
 import Count from "../components/Count"
 import Aide from "../components/Aide"
 import Filtre from "../components/Filtre"
-
+import { useState } from "react";
 
 const ARTWORK =
 "https://raw.githubusercontent.com/PokeAPI/sprites" +
@@ -20,17 +20,22 @@ const POKEMONS = [
   { number: 172, name: "Pichu", type: "Electrik" },
 ];
 
-
-
 export default function Index() {
+  const [typeFiltre, chooseType] = useState(null);
+
+  const visibles = typeFiltre
+      ? POKEMONS.filter((p) => p.type === typeFiltre)
+      : POKEMONS;
+
   return (
     <ScrollView style={styles.uppercontainer}>
       <Titre />
       <View style={styles.container}>
-        <Text>{POKEMONS.length} pokemons possédés</Text>
+        <Text>{visibles.length} pokemons possédés</Text>
         <Aide />
       </View>
-      {POKEMONS.map((pokemon) => (
+      <Filtre typeFiltre={typeFiltre} chooseType={chooseType} />
+      {visibles.map((pokemon) => (
         <PokemonCard
           key={pokemon.number}
           number={pokemon.number}
