@@ -15,25 +15,27 @@ Eau: "#b2c7f7",
 Electrik: "#fbe693",
 };
 
-
 export default function PokemonCard({ number, name, type, ARTWORK }) {
   const cardColor = CARD_COLORS[type];
   const typeColor = TYPE_COLORS[type];
-  const [isCaptured, setCaptured] = useState(true)
+  const [isCaptured, setCaptured] = useState(true);
+
   return (
     <View style={[styles.container, { backgroundColor: cardColor }]}>
     <Image
       source={{ uri: `${ARTWORK}${number}.png` }}
       style={styles.image}
     />
-    <View>
+    <View style={styles.infoContainer}>
       <Text style={styles.number}>#{number}</Text>
       <Text style={styles.name}>{name}</Text>
         <Text style={[styles.type,{backgroundColor: typeColor}]}>{type}</Text>
-      </View>
+    </View>
+
       <Pressable style={styles.button} onPress={()=>setCaptured(!isCaptured)}>
-        <Text>{isCaptured ? "Capturer" : "✨"}</Text>
+        <Text>{isCaptured ? "Capturer ◓" : "Capturé ✓"}</Text>
       </Pressable>
+
   </View>
   );
 }
@@ -42,6 +44,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "row",
+    alignItems: "center",
+    justifyContent:"space-between",
     borderRadius: 50,
     margin: 5,
     padding:15
@@ -49,6 +53,10 @@ const styles = StyleSheet.create({
   image: {
     width: 100,
     height: 100
+  },
+  infoContainer: {
+    flex: 1,
+    marginLeft:15
   },
   name: {
     fontWeight: "bold",
@@ -61,15 +69,23 @@ const styles = StyleSheet.create({
     padding:10,
     borderRadius: 10,
     textAlign: "center",
+    alignSelf: "flex-start",
     margin: 10,
   },
   button: {
     borderColor: "black",
-    borderRadius: 5,
+    borderRadius: 10,
     borderWidth:2,
+    margin: 5,
+    paddingHorizontal: 12,
+    minWidth: 120,
+    alignItems: "center",
+    justifyContent: "center",
+    height:40
+  },
+  buttonText: {
     color: "black",
     textAlign: "center",
-    margin: 5,
-    padding:25
+    width:"100%",
   }
 });
