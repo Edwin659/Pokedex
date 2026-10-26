@@ -1,6 +1,10 @@
 import { Text,View, StyleSheet, ScrollView, Pressable } from "react-native";
 import Titre from "../components/Titre"
 import PokemonCard from "../components/PokemonCard"
+import Count from "../components/Count"
+import Aide from "../components/Aide"
+import Filtre from "../components/Filtre"
+
 
 const ARTWORK =
 "https://raw.githubusercontent.com/PokeAPI/sprites" +
@@ -16,23 +20,16 @@ const POKEMONS = [
   { number: 172, name: "Pichu", type: "Electrik" },
 ];
 
-function chooseType(POKEMONS) {
-  const FIRE = POKEMONS.filter((p) => p.type === "Feu");
-  const WATER = POKEMONS.filter((p) => p.type === "Eau");
-  const ELEC = POKEMONS.filter((p) => p.type === "Electrik");
-  const GRASS =  POKEMONS.filter((p) => p.type === "Plante");
-}
+
 
 export default function Index() {
   return (
     <ScrollView style={styles.uppercontainer}>
       <Titre />
-      <View>
-      <Pressable style={styles.element}>
-        <Text>FIRE</Text>
-        </Pressable>
+      <View style={styles.container}>
+        <Text>{POKEMONS.length} pokemons possédés</Text>
+        <Aide />
       </View>
-      <Text>{POKEMONS.length} pokemons possédés</Text>
       {POKEMONS.map((pokemon) => (
         <PokemonCard
           key={pokemon.number}
@@ -50,6 +47,13 @@ const styles = StyleSheet.create({
   uppercontainer: {
     backgroundColor: "lightgrey",
     padding:10
+  },
+  container: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginVertical: 10,
   },
   element: {
     backgroundColor: "white",

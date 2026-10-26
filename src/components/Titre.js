@@ -1,7 +1,7 @@
 import { Text, StyleSheet } from "react-native"
 
 export default function Titre(){
-  return( <Text style={styles.titre}>Mon POKEDEX</Text>)
+  return( <Text style={styles.titre}>Ed's POKEDEX</Text>)
 }
 
 const styles = StyleSheet.create({

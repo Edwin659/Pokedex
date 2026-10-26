@@ -1,4 +1,5 @@
-import { Text, StyleSheet, View, Image } from "react-native"
+import { Text, StyleSheet, View, Image, Pressable } from "react-native"
+import { useState } from "react"
 
 const TYPE_COLORS = {
 Plante: "#78C850",
@@ -18,9 +19,9 @@ Electrik: "#fbe693",
 export default function PokemonCard({ number, name, type, ARTWORK }) {
   const cardColor = CARD_COLORS[type];
   const typeColor = TYPE_COLORS[type];
+  const [isCaptured, setCaptured] = useState(true)
   return (
     <View style={[styles.container, { backgroundColor: cardColor }]}>
-    {/* <Image source={{ uri: ARTWORK + "4" + ".png" }} />*/}
     <Image
       source={{ uri: `${ARTWORK}${number}.png` }}
       style={styles.image}
@@ -29,7 +30,10 @@ export default function PokemonCard({ number, name, type, ARTWORK }) {
       <Text style={styles.number}>#{number}</Text>
       <Text style={styles.name}>{name}</Text>
         <Text style={[styles.type,{backgroundColor: typeColor}]}>{type}</Text>
-    </View>
+      </View>
+      <Pressable style={styles.button} onPress={()=>setCaptured(!isCaptured)}>
+        <Text>{isCaptured ? "Capturer" : "✨"}</Text>
+      </Pressable>
   </View>
   );
 }
@@ -58,5 +62,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     textAlign: "center",
     margin: 10,
+  },
+  button: {
+    borderColor: "black",
+    borderRadius: 5,
+    borderWidth:2,
+    color: "black",
+    textAlign: "center",
+    margin: 5,
+    padding:25
   }
 });
