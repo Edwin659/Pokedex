@@ -15,13 +15,21 @@ Eau: "#b2c7f7",
 Electrik: "#fbe693",
 };
 
+const BOUTON_COLORS = {
+Plante: "#8dd16b",
+Feu: "#f2914d",
+Eau: "#6d95f0",
+Electrik: "#f8d549",
+};
+
 export default function PokemonCard({ number, name, type, ARTWORK }) {
   const cardColor = CARD_COLORS[type];
   const typeColor = TYPE_COLORS[type];
+  const boutonColor = BOUTON_COLORS[type]
   const [isCaptured, setCaptured] = useState(true);
 
   return (
-    <View style={[styles.container, { backgroundColor: cardColor }]}>
+    <View style={[styles.container, { backgroundColor: cardColor }, !isCaptured && {borderColor: typeColor, borderWidth:2} ]}>
     <Image
       source={{ uri: `${ARTWORK}${number}.png` }}
       style={styles.image}
@@ -32,7 +40,7 @@ export default function PokemonCard({ number, name, type, ARTWORK }) {
         <Text style={[styles.type,{backgroundColor: typeColor}]}>{type}</Text>
     </View>
 
-      <Pressable style={styles.button} onPress={()=>setCaptured(!isCaptured)}>
+      <Pressable style={[styles.button,!isCaptured && {backgroundColor: boutonColor}]} onPress={()=>setCaptured(!isCaptured)}>
         <Text>{isCaptured ? "Capturer ◓" : "Capturé ✓"}</Text>
       </Pressable>
 
@@ -49,6 +57,10 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     margin: 5,
     padding:15
+  },
+  containerCaptured: {
+    borderColor: "purple",
+    borderWidth:2
   },
   image: {
     width: 100,
@@ -82,6 +94,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     height:40
+  },
+  buttonClique: {
+    backgroundColor: "#fafafa"
   },
   buttonText: {
     color: "black",

@@ -31,7 +31,7 @@ export default function Index() {
     <ScrollView style={styles.uppercontainer}>
       <Titre />
       <View style={styles.container}>
-        <Text>{visibles.length} pokemons possédés</Text>
+        <Text>{visibles.length} pokemons</Text>
         <Aide />
       </View>
       <Filtre typeFiltre={typeFiltre} chooseType={chooseType} />
