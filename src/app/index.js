@@ -1,49 +1,62 @@
-import { Text,View, StyleSheet, ScrollView, Pressable } from "react-native";
+import { Text, View, StyleSheet, ScrollView, Pressable, FlatList } from "react-native";
+import { useState } from "react";
 import Titre from "../components/Titre"
 import PokemonCard from "../components/PokemonCard"
 import Count from "../components/Count"
 import Aide from "../components/Aide"
 import Filtre from "../components/Filtre"
-import { useState } from "react";
+import POKEMONS from "../data/pokemon"
 
 const ARTWORK =
 "https://raw.githubusercontent.com/PokeAPI/sprites" +
 "/master/sprites/pokemon/other/official-artwork/";
 
-const POKEMONS = [
-  { number: 1, name: "Bulbizarre", type: "Plante" },
-  { number: 4, name: "Salamèche", type: "Feu" },
-  { number: 7, name: "Carapuce", type: "Eau" },
-  { number: 25, name: "Pikachu", type: "Electrik" },
-  { number: 37, name: "Goupix", type: "Feu" },
-  { number: 43, name: "Mystherbe", type: "Plante" },
-  { number: 172, name: "Pichu", type: "Electrik" },
-];
-
 export default function Index() {
   const [typeFiltre, chooseType] = useState(null);
+  const [isCaptured, setCaptured] = useState([]);
+  const [capturesSeulement, setCapturesSeulement] = useState(false);
 
-  const visibles = typeFiltre
-      ? POKEMONS.filter((p) => p.type === typeFiltre)
-      : POKEMONS;
+  const visibles = POKEMONS.filter((p) =>
+    (!typeFiltre || p.type === typeFiltre) &&
+    (!capturesSeulement || isCaptured.includes(p.number))
+  );
+
+  const OnCapture = (number) => {
+    if (isCaptured.includes(number)) {
+      setCaptured(isCaptured.filter((id) => id !== number));
+    } else {
+      setCaptured([...isCaptured, number]);
+    }
+  }
 
   return (
     <ScrollView style={styles.uppercontainer}>
       <Titre />
       <View style={styles.container}>
         <Text>{visibles.length} pokemons</Text>
+        <Text>{isCaptured.length} capturés</Text>
         <Aide />
       </View>
-      <Filtre typeFiltre={typeFiltre} chooseType={chooseType} />
-      {visibles.map((pokemon) => (
-        <PokemonCard
-          key={pokemon.number}
-          number={pokemon.number}
-          name={pokemon.name}
-          type={pokemon.type}
-          ARTWORK={ARTWORK}
+      <Filtre typeFiltre={typeFiltre} chooseType={chooseType} capturesSeul={capturesSeulement} setCapturedSeul={setCapturesSeulement} />
+        <FlatList
+        data={visibles}
+        extraData={isCaptured}
+          keyExtractor={(item)=>String(item.number)}
+          numColumns={2}
+          columnWrapperStyle={{ gap: 12 }}
+          contentContainerStyle={{ padding: 16, gap: 12 }}
+          renderItem={({ item }) => (
+            <PokemonCard
+              key={item.number}
+              number={item.number}
+              name={item.name}
+              captured={isCaptured.includes(item.number)}
+              onCapture={() => OnCapture(item.number)}
+              type={item.type}
+              ARTWORK={ARTWORK}
+            />
+            )}
         />
-      ))}
     </ScrollView>
   );
 }
