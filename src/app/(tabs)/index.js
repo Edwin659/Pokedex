@@ -1,11 +1,12 @@
 import { Text, View, StyleSheet, ScrollView, Pressable, FlatList } from "react-native";
 import { useState } from "react";
-import Titre from "../components/Titre"
-import PokemonCard from "../components/PokemonCard"
-import Count from "../components/Count"
-import Aide from "../components/Aide"
-import Filtre from "../components/Filtre"
-import POKEMONS from "../data/pokemon"
+import { Link, router } from 'expo-router';
+import Titre from "../../components/Titre"
+import PokemonCard from "../../components/PokemonCard"
+import Count from "../../components/Count"
+import Aide from "../../components/Aide"
+import Filtre from "../../components/Filtre"
+import POKEMONS from "../../data/pokemon"
 
 const ARTWORK =
 "https://raw.githubusercontent.com/PokeAPI/sprites" +
@@ -43,9 +44,9 @@ export default function Index() {
         extraData={isCaptured}
           keyExtractor={(item)=>String(item.number)}
           numColumns={2}
-          columnWrapperStyle={{ gap: 12 }}
-          contentContainerStyle={{ padding: 16, gap: 12 }}
-          renderItem={({ item }) => (
+          columnWrapperStyle={{ gap: 5 }}
+        renderItem={({ item }) => (
+          <Pressable onPress={() => router.push({ pathname: `/pokemon/${item.number}`})}>
             <PokemonCard
               key={item.number}
               number={item.number}
@@ -55,6 +56,7 @@ export default function Index() {
               type={item.type}
               ARTWORK={ARTWORK}
             />
+          </Pressable>
             )}
         />
     </ScrollView>

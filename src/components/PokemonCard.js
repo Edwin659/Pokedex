@@ -117,11 +117,11 @@ const styles = StyleSheet.create({
   number: {
     color: "grey"
   },
-  type: {
-    padding:10,
-    borderRadius: 10,
+  type:
+{    borderRadius: 10,
     textAlign: "center",
     margin: 10,
+    padding:5
   },
   button: {
     borderColor: "black",
