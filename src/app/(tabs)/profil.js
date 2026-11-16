@@ -4,10 +4,10 @@ const ARTWORK =
   "/master/sprites/pokemon/other/official-artwork/";
 export default function Profil() {
   return (
-    <View>
+    <View style={styles.container}>
       <Text style={styles.titre}>EDWIN</Text>
       <Text>Mon pokemon préféré : </Text>
-      <View style={{ flex: 1, alignItems: "center", padding: 24 }}>
+      <View style={styles.card}>
           <Image
             source={{
             uri: `${ARTWORK}172.png`
@@ -17,26 +17,35 @@ export default function Profil() {
           <View style={styles.infoContainer} >
             <Text style={styles.number}>#172</Text>
             <Text style={styles.name}>Pichu</Text>
-          <Text style={[styles.type, { backgroundColor:"#F8D030",
- }]}>Electrik</Text>
+          <Text style={styles.type}>Electrik</Text>
         </View>
       </View>
     </View>
   );
 }
 const styles = StyleSheet.create({
+  container: {
+      flex: 1,
+      backgroundColor: "#fff",
+      padding: 16,
+    },
   titre: {
     fontSize: 30,
     fontWeight: "bold",
     textAlign: "center",
     padding: 10
   },
+  card: {
+    flex: 1,
+    alignItems: "center",
+    padding: 24,
+  },
   image: {
     width: 200,
-    height: 200
+    height: 200,
   },
   infoContainer: {
-    flex: 1,
+    marginTop:10,
     alignItems: "center"
   },
   name: {
@@ -52,5 +61,6 @@ const styles = StyleSheet.create({
     padding:10,
     borderRadius: 10,
     textAlign: "center",
+    backgroundColor:"#F8D030"
   }
 })
